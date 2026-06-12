@@ -1,17 +1,70 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                </div>
+    <div class="max-w-6xl mx-auto py-8">
+
+        <form method="POST" action="{{ route('urls.store') }}">
+            @csrf
+
+            <div class="flex gap-3">
+                <input
+                    type="url"
+                    name="url"
+                    placeholder="https://example.com"
+                    class="border rounded p-2 flex-1"
+                    required
+                >
+
+                <button
+                    class="bg-black text-white px-4 py-2 rounded"
+                >
+                    Shorten
+                </button>
             </div>
+        </form>
+
+        <div class="mt-8">
+
+            <table class="w-full border">
+
+                <thead>
+                    <tr>
+                        <th>Short URL</th>
+                        <th>Original URL</th>
+                        <th>Clicks</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                @foreach($urls as $url)
+
+                    <tr>
+                        <td>
+                            <a
+                                href="{{ url($url->short_code) }}"
+                                target="_blank"
+                            >
+                                {{ url($url->short_code) }}
+                            </a>
+                        </td>
+
+                        <td>
+                            {{ Str::limit($url->original_url, 50) }}
+                        </td>
+
+                        <td>
+                            {{ $url->clicks }}
+                        </td>
+                    </tr>
+
+                @endforeach
+
+                </tbody>
+
+            </table>
+
         </div>
+
     </div>
+
 </x-app-layout>
