@@ -1,6 +1,8 @@
 <x-app-layout>
 
     <div class="max-w-6xl mx-auto py-8">
+
+        <div id="toast" class="hidden fixed top-5 right-5 bg-green-600 text-blue-500 px-4 py-2 rounded shadow-lg z-50" style="margin: 50px;"></div>
         @if ($errors->any())
 
             <div class="mb-4">
@@ -16,6 +18,8 @@
             </div>
 
         @endif
+
+        
 
         <form method="POST" action="{{ route('urls.store') }}">
             @csrf
@@ -67,6 +71,13 @@
                             >
                                 {{ url($url->short_code) }}
                             </a>
+                            <button
+                                type="button"
+                                class="copy-btn px-2 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300"
+                                data-url="{{ url($url->short_code) }}"
+                            >
+                                Copy
+                            </button>
                         </td>
 
                         <td>
@@ -87,5 +98,8 @@
         </div>
 
     </div>
+    @push('scripts')
+        <script src="{{ asset('js/dashboard.js') }}"></script>
+    @endpush
 
 </x-app-layout>
