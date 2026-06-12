@@ -1,6 +1,21 @@
 <x-app-layout>
 
     <div class="max-w-6xl mx-auto py-8">
+        @if ($errors->any())
+
+            <div class="mb-4">
+
+                @foreach ($errors->all() as $error)
+
+                    <p class="text-red-500">
+                        {{ $error }}
+                    </p>
+
+                @endforeach
+
+            </div>
+
+        @endif
 
         <form method="POST" action="{{ route('urls.store') }}">
             @csrf
@@ -13,6 +28,12 @@
                     class="border rounded p-2 flex-1"
                     required
                 >
+                <input
+                    type="text"
+                    name="short_code"
+                    placeholder="Custom alias (optional)"
+                    class="border rounded p-2 flex-1"
+                />
 
                 <button
                     class="bg-black text-white px-4 py-2 rounded"
