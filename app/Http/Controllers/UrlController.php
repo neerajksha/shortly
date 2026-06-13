@@ -101,7 +101,7 @@ class UrlController extends Controller
         ]);
 
         return back()
-            ->with('success', 'Short URL created.');
+            ->with('success', 'Short URL created successfully.');
     }
 
     public function redirect($code)

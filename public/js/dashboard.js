@@ -30,6 +30,17 @@ document.addEventListener('DOMContentLoaded', () => {
         toast.show();
     };
 
+    const flashSuccess =
+        document.getElementById('flash-success');
+
+    if (flashSuccess) {
+
+        showToast(
+            flashSuccess.dataset.message
+        );
+
+    }
+
     document.addEventListener('click', async (e) => {
 
         const copyButton = e.target.closest('.copy-btn');

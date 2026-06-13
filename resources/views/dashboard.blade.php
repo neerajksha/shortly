@@ -20,6 +20,16 @@
 
     @endif
 
+    @if(session('success'))
+
+        <div
+            id="flash-success"
+            data-message="{{ session('success') }}"
+            hidden
+        ></div>
+
+    @endif
+
     <div class="hero-section">
         <div class="row align-items-center">
             <div class="col-md-8">
