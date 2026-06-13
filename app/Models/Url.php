@@ -11,10 +11,16 @@ class Url extends Model
         'original_url',
         'short_code',
         'clicks',
+        'expires_at',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function clicksData()
+    {
+        return $this->hasMany(UrlClick::class);
     }
 }

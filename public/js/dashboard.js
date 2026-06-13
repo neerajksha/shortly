@@ -1,11 +1,9 @@
 function copyText(text) {
-
     return navigator.clipboard
         .writeText(text)
         .catch(() => {
 
-            const input =
-                document.createElement('textarea');
+            const input = document.createElement('textarea');
 
             input.value = text;
 
@@ -21,54 +19,98 @@ function copyText(text) {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    const toast = document.getElementById('toast');
+    window.showToast = function (message) {
 
-    function showToast(message, type = 'success') {
+        const toastEl = document.getElementById('appToast');
 
-        toast.textContent = message;
+        toastEl.querySelector('.toast-body').textContent = message;
 
-        toast.classList.remove('hidden');
+        const toast = new bootstrap.Toast(toastEl);
 
-        setTimeout(() => {
-            toast.classList.add('hidden');
-        }, 3000);
-    }
+        toast.show();
+    };
 
     document.addEventListener('click', async (e) => {
 
-        const button = e.target.closest('.copy-btn');
+        const copyButton = e.target.closest('.copy-btn');
 
-        if (!button) {
+        if (copyButton) {
+
+            try {
+
+                await copyText(copyButton.dataset.url);
+
+                const originalText = copyButton.innerText;
+
+                copyButton.innerText = 'Copied!';
+
+                showToast('URL copied successfully');
+
+                setTimeout(() => {
+                    copyButton.innerText = originalText;
+                }, 2000);
+
+            } catch (error) {
+
+                showToast('Failed to copy URL');
+            }
+
             return;
         }
 
-        try {
+        const qrButton = e.target.closest('.qr-btn');
 
-            await copyText(
-                button.dataset.url
+        if (qrButton) {
+
+            document.getElementById('qr-image').src =
+                qrButton.dataset.qrUrl;
+
+            const modal = new bootstrap.Modal(
+                document.getElementById('qrModal')
             );
 
-            const originalText =
-                button.innerText;
-
-            button.innerText = 'Copied!';
-
-            showToast(
-                'URL copied successfully'
-            );
-
-            setTimeout(() => {
-                button.innerText =
-                    originalText;
-            }, 2000);
-
-        } catch (error) {
-
-            showToast(
-                'Failed to copy URL',
-                'error'
-            );
+            modal.show();
         }
+    });
+
+    $(document).ready(function () {
+
+        $('#urlsTable').DataTable({
+
+            processing: true,
+
+            serverSide: true,
+
+            ajax: '/dashboard/data',
+
+            order: [[0, 'desc']],
+
+            columns: [
+                {
+                    data: 'id',
+                    name: 'id'
+                },
+                {
+                    data: 'short_code',
+                    name: 'short_code'
+                },
+                {
+                    data: 'original_url',
+                    name: 'original_url'
+                },
+                {
+                    data: 'clicks',
+                    name: 'clicks',
+                    orderable: true,
+                },
+                {
+                    data: 'actions',
+                    orderable: false,
+                    searchable: false
+                }
+            ]
+        });
+
     });
 
 });

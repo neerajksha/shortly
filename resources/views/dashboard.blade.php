@@ -1,105 +1,300 @@
 <x-app-layout>
 
-    <div class="max-w-6xl mx-auto py-8">
+<div class="container py-4">
 
-        <div id="toast" class="hidden fixed top-5 right-5 bg-green-600 text-blue-500 px-4 py-2 rounded shadow-lg z-50" style="margin: 50px;"></div>
-        @if ($errors->any())
+    @if ($errors->any())
 
-            <div class="mb-4">
+        <div class="alert alert-danger">
+
+            <ul class="mb-0">
 
                 @foreach ($errors->all() as $error)
 
-                    <p class="text-red-500">
-                        {{ $error }}
-                    </p>
+                    <li>{{ $error }}</li>
 
                 @endforeach
 
+            </ul>
+
+        </div>
+
+    @endif
+
+    <div class="hero-section">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h2 class="fw-bold mb-2">
+                    🔗 Shorten. Share. Track.
+                </h2>
+
+                <p class="mb-0">
+                    Create short links, custom aliases, QR codes and track clicks in real time.
+                </p>
             </div>
 
-        @endif
-
-        
-
-        <form method="POST" action="{{ route('urls.store') }}">
-            @csrf
-
-            <div class="flex gap-3">
-                <input
-                    type="url"
-                    name="url"
-                    placeholder="https://example.com"
-                    class="border rounded p-2 flex-1"
-                    required
-                >
-                <input
-                    type="text"
-                    name="short_code"
-                    placeholder="Custom alias (optional)"
-                    class="border rounded p-2 flex-1"
-                />
-
-                <button
-                    class="bg-black text-white px-4 py-2 rounded"
-                >
-                    Shorten
-                </button>
+            <div class="col-md-4 text-end">
+                <h1>🚀</h1>
             </div>
-        </form>
+        </div>
+    </div>
 
-        <div class="mt-8">
+    <!-- Stats Row -->
 
-            <table class="w-full border">
+    <div class="row mb-4 g-3">
 
-                <thead>
-                    <tr>
-                        <th>Short URL</th>
-                        <th>Original URL</th>
-                        <th>Clicks</th>
-                    </tr>
-                </thead>
+    <div class="col-md-3">
+        <div class="card stat-card stat-primary">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div>
+                    <small>Total URLs</small>
+                    <h2>{{ auth()->user()->urls()->count() }}</h2>
+                </div>
+                <div class="stats-icon">🔗</div>
+            </div>
+        </div>
+    </div>
 
-                <tbody>
+    <div class="col-md-3">
+        <div class="card stat-card stat-success">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div>
+                    <small>Total Clicks</small>
+                    <h2>{{ auth()->user()->urls()->sum('clicks') }}</h2>
+                </div>
+                <div class="stats-icon">👆</div>
+            </div>
+        </div>
+    </div>
 
-                @foreach($urls as $url)
+    <div class="col-md-3">
+        <div class="card stat-card stat-warning">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div>
+                    <small>Active URLs</small>
+                    <h2>
+                        {{
+                            auth()->user()
+                                ->urls()
+                                ->where(function ($q) {
+                                    $q->whereNull('expires_at')
+                                      ->orWhere('expires_at', '>', now());
+                                })
+                                ->count()
+                        }}
+                    </h2>
+                </div>
+                <div class="stats-icon">📈</div>
+            </div>
+        </div>
+    </div>
 
-                    <tr>
-                        <td>
-                            <a
-                                href="{{ url($url->short_code) }}"
-                                target="_blank"
-                            >
-                                {{ url($url->short_code) }}
-                            </a>
-                            <button
-                                type="button"
-                                class="copy-btn px-2 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300"
-                                data-url="{{ url($url->short_code) }}"
-                            >
-                                Copy
-                            </button>
-                        </td>
+    <div class="col-md-3">
+        <div class="card stat-card stat-danger">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div>
+                    <small>Expired URLs</small>
+                    <h2>
+                        {{
+                            auth()->user()
+                                ->urls()
+                                ->where('expires_at', '<', now())
+                                ->count()
+                        }}
+                    </h2>
+                </div>
+                <div class="stats-icon">⏰</div>
+            </div>
+        </div>
+    </div>
 
-                        <td>
-                            {{ Str::limit($url->original_url, 50) }}
-                        </td>
+</div>
 
-                        <td>
-                            {{ $url->clicks }}
-                        </td>
-                    </tr>
+    <!-- Create URL Card -->
 
-                @endforeach
+    <!-- <div class="card shadow-sm mb-4"> -->
+    <div class="card shortener-card mb-4">
 
-                </tbody>
+        <div class="card-header">
 
-            </table>
+            <strong>
+                Create Short URL
+            </strong>
+
+        </div>
+
+        <div class="card-body">
+
+            <form
+                method="POST"
+                action="{{ route('urls.store') }}"
+            >
+
+                @csrf
+
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+
+                        <input
+                            type="url"
+                            name="url"
+                            class="form-control"
+                            placeholder="Paste your long URL here..."
+                            required
+                        >
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <input
+                            type="text"
+                            name="short_code"
+                            class="form-control"
+                            placeholder="custom-alias"
+                        >
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <input
+                            type="datetime-local"
+                            name="expires_at"
+                            class="form-control"
+                        >
+
+                    </div>
+
+                    <div class="col-md-2">
+
+                        <button
+                            type="submit"
+                            class="btn btn-shorten w-100"
+                        >
+                            🚀 Shorten URL
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
 
         </div>
 
     </div>
-    @push('scripts')
-        <script src="{{ asset('js/dashboard.js') }}"></script>
-    @endpush
+
+    <!-- URLs Table -->
+
+    <!-- <div class="card shadow-sm"> -->
+    <div class="card table-card">
+
+        <div class="card-header">
+
+            <strong>
+                My URLs
+            </strong>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table
+                    id="urlsTable"
+                    class="table table-striped table-hover align-middle"
+                >
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>Short URL</th>
+
+                            <th>Original URL</th>
+
+                            <th>Clicks</th>
+
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- QR Modal -->
+
+<div class="modal fade" id="qrModal" tabindex="-1">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content border-0 shadow-lg rounded-4">
+
+            <div class="modal-header border-0">
+
+                <h5 class="modal-title fw-bold">
+                    QR Code
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body text-center">
+
+                <img
+                    id="qr-image"
+                    src=""
+                    alt="QR Code"
+                    class="img-fluid mx-auto d-block"
+                    style="max-width:250px;"
+                >
+
+                <p class="text-muted mt-3 mb-0">
+                    Scan to open the shortened URL
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Toast -->
+
+<div
+    class="toast position-fixed top-0 end-0 m-3"
+    id="appToast"
+    role="alert"
+>
+
+    <div class="toast-body"></div>
+
+</div>
+
+@push('scripts')
+
+    <script src="{{ asset('js/dashboard.js') }}"></script>
+
+@endpush
 
 </x-app-layout>

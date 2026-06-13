@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UrlController;
+use App\Http\Controllers\QrCodeController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,6 +23,26 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/urls', [UrlController::class, 'store'])
         ->name('urls.store');
+
+    Route::delete('/urls/{url}', [UrlController::class, 'destroy'])
+        ->name('urls.destroy');
+
+    Route::get(
+        '/dashboard/data',
+        [UrlController::class, 'data']
+    )->name('dashboard.data');
+
+    Route::get('/qr/{url}', [QrCodeController::class, 'show'])
+        ->name('urls.qr');
+    Route::get(
+    '/urls/{url}/qr/download',
+    [QrCodeController::class, 'downloadQr']
+        )->name('urls.qr.download');
+
+    Route::get(
+        '/urls/{url}/analytics',
+        [UrlController::class, 'analytics']
+    )->name('urls.analytics');
 });
 
 require __DIR__.'/auth.php';
