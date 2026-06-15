@@ -40,27 +40,27 @@ A modern URL shortening platform built with Laravel 12 that allows users to crea
 
 ### Landing Page
 
-![Landing Page](screenshots/01-home.png)
+![Landing Page](public/screenshots/01-home.png)
 
 ### User Dashboard
 
-![Dashboard](screenshots/02-dashboard.png)
+![Dashboard](public/screenshots/02-dashboard.png)
 
 ### Analytics
 
-![Analytics](screenshots/03-analytics.png)
+![Analytics](public/screenshots/03-analytics.png)
 
 ### API Documentation
 
-![API Docs](screenshots/04-api-docs.png)
+![API Docs](public/screenshots/04-api-docs.png)
 
 ### Admin Dashboard
 
-![Admin Dashboard](screenshots/05-admin-dashboard.png)
+![Admin Dashboard](public/screenshots/05-admin-dashboard.png)
 
 ### Password Protected Links
 
-![Protected Links](screenshots/06-password-protected.png)
+![Protected Links](public/screenshots/06-password-protected.png)
 
 ---
 
