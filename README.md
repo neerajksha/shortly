@@ -68,7 +68,7 @@ A modern URL shortening platform built with Laravel 12 that allows users to crea
 
 ### Backend
 
-* Laravel 12
+* Laravel 13
 * PHP 8.4
 * MySQL
 * Laravel Sanctum
