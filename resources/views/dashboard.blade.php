@@ -143,7 +143,7 @@
 
                 <div class="row g-3">
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
 
                         <input
                             type="url"
@@ -155,7 +155,7 @@
 
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-2">
 
                         <input
                             type="text"
@@ -166,7 +166,7 @@
 
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-2">
 
                         <input
                             type="datetime-local"
@@ -178,11 +178,37 @@
 
                     <div class="col-md-2">
 
+                        <input
+                            type="password"
+                            name="password"
+                            class="form-control"
+                            placeholder="Password (optional)"
+                            minlength="4"
+                            maxlength="16"
+                        >
+
+                    </div>
+
+                    <div class="col-md-2">
+
                         <button
                             type="submit"
                             class="btn btn-shorten w-100"
                         >
-                            🚀 Shorten URL
+                            Shorten URL
+                        </button>
+
+                    </div>
+
+                    <div class="col-md-1">
+
+                        <button
+                            type="button"
+                            class="btn btn-outline-primary w-100"
+                            data-bs-toggle="modal"
+                            data-bs-target="#importModal"
+                        >
+                            Import
                         </button>
 
                     </div>
@@ -298,6 +324,74 @@
 >
 
     <div class="toast-body"></div>
+
+</div>
+
+<div
+    class="modal fade"
+    id="importModal"
+>
+
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <form
+                method="POST"
+                action="{{ route('urls.import') }}"
+                enctype="multipart/form-data"
+            >
+
+                @csrf
+
+                <div class="modal-header">
+
+                    <h5>
+                        Import URLs
+                    </h5>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <input
+                        type="file"
+                        name="file"
+                        class="form-control"
+                        accept=".csv,.xlsx,.xls"
+                        required
+                    >
+
+                    <small class="text-muted">
+
+                        Supported:
+                        CSV, XLSX, XLS
+
+                    </small>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <a
+                        href="{{ route('urls.sample') }}"
+                    >
+                        Download Sample CSV
+                    </a>
+
+                    <button
+                        class="btn btn-primary"
+                    >
+                        Import
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
 
 </div>
 

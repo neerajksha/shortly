@@ -30,8 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         toast.show();
     };
 
-    const flashSuccess =
-        document.getElementById('flash-success');
+    const flashSuccess = document.getElementById('flash-success');
 
     if (flashSuccess) {
 

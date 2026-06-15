@@ -2,7 +2,13 @@
 
     <div class="container">
 
-        <a class="navbar-brand d-flex align-items-center gap-3" href="{{ route('dashboard') }}">
+        @php
+            $dashboardRoute = auth()->check() && auth()->user()->is_admin
+                ? route('admin.dashboard')
+                : route('dashboard');
+        @endphp
+
+        <a class="navbar-brand d-flex align-items-center gap-3" href="{{ $dashboardRoute }}">
 
             <div class="logo-circle">
                 🔗
@@ -24,9 +30,27 @@
 
         <div class="ms-auto d-flex align-items-center gap-3">
 
-            <a href="{{ route('dashboard') }}" class="nav-link">
-                Dashboard
-            </a>
+            @if(auth()->user()->is_admin)
+                <a href="{{ $dashboardRoute }}" class="nav-link">
+                    Dashboard
+                </a>
+                <a href="{{ route('admin.users.index') }}" class="nav-link">
+                    Manage Users
+                </a>
+                <a href="{{ route('admin.urls.index') }}" class="nav-link">
+                    Manage URLs
+                </a>
+            @else
+                <a href="{{ $dashboardRoute }}" class="nav-link">
+                    Dashboard
+                </a>
+                <a
+                    href="{{ route('api-tokens.index') }}"
+                    class="nav-link"
+                >
+                    API Tokens
+                </a>
+            @endif
 
             <button
                 class="user-menu dropdown-toggle"

@@ -1,58 +1,304 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Shortly 🚀
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A modern URL shortening platform built with Laravel 12 that allows users to create, manage, secure, and analyze shortened URLs through a powerful dashboard and REST API.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## ✨ Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### User Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+* Create short URLs
+* Custom URL aliases
+* URL expiration dates
+* Password-protected links
+* QR code generation
+* Link editing
+* URL analytics and click tracking
+* Bulk URL import (CSV/XLSX)
 
-## Learning Laravel
+### Developer Features
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+* REST API
+* Laravel Sanctum API authentication
+* Personal API tokens
+* API rate limiting
+* Developer documentation portal
+* API analytics endpoints
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Admin Features
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+* Admin dashboard
+* User management
+* URL management
+* Global analytics
+* User suspension system
 
-## Agentic Development
+---
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## 📸 Screenshots
 
-```bash
-composer require laravel/boost --dev
+### Landing Page
 
-php artisan boost:install
+![Landing Page](screenshots/01-home.png)
+
+### User Dashboard
+
+![Dashboard](screenshots/02-dashboard.png)
+
+### Analytics
+
+![Analytics](screenshots/03-analytics.png)
+
+### API Documentation
+
+![API Docs](screenshots/04-api-docs.png)
+
+### Admin Dashboard
+
+![Admin Dashboard](screenshots/05-admin-dashboard.png)
+
+### Password Protected Links
+
+![Protected Links](screenshots/06-password-protected.png)
+
+---
+
+## 🛠 Tech Stack
+
+### Backend
+
+* Laravel 12
+* PHP 8.4
+* MySQL
+* Laravel Sanctum
+
+### Frontend
+
+* Bootstrap 5
+* JavaScript
+* DataTables
+
+### Packages
+
+* Yajra DataTables
+* Laravel Excel
+* Simple QR Code
+* Laravel Sanctum
+
+---
+
+## 🔐 Authentication
+
+Shortly supports:
+
+* User Registration
+* Login / Logout
+* Password Reset
+* Email Verification
+* API Token Authentication
+
+---
+
+## 📊 Analytics
+
+Track detailed URL performance:
+
+* Total Clicks
+* Unique Visitors
+* Browser Information
+* Device Type
+* Platform Information
+* Click History
+
+---
+
+## 🔒 Password Protected Links
+
+Protect sensitive links with a password.
+
+Features:
+
+* Password verification page
+* Session-based unlocking
+* Password invalidation after updates
+* Remove protection anytime
+
+---
+
+## 📦 Bulk Import
+
+Import hundreds of URLs at once.
+
+Supported formats:
+
+* CSV
+* XLSX
+* XLS
+
+Template download included.
+
+---
+
+## 🔌 REST API
+
+### Authentication
+
+Generate API tokens from:
+
+Dashboard → API Tokens
+
+Include the token in requests:
+
+```http
+Authorization: Bearer YOUR_API_TOKEN
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### Available Endpoints
 
-## Contributing
+#### Create Short URL
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```http
+POST /api/v1/shorten
+```
 
-## Code of Conduct
+#### List URLs
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```http
+GET /api/v1/urls
+```
 
-## Security Vulnerabilities
+#### Update URL
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```http
+PUT /api/v1/urls/{id}
+```
 
-## License
+#### Delete URL
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```http
+DELETE /api/v1/urls/{id}
+```
+
+#### URL Analytics
+
+```http
+GET /api/v1/urls/{id}/analytics
+```
+
+#### Click Logs
+
+```http
+GET /api/v1/urls/{id}/clicks
+```
+
+---
+
+## 🚀 Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/your-username/shortly.git
+```
+
+Move into project directory:
+
+```bash
+cd shortly
+```
+
+Install dependencies:
+
+```bash
+composer install
+```
+
+```bash
+npm install
+```
+
+Create environment file:
+
+```bash
+cp .env.example .env
+```
+
+Generate application key:
+
+```bash
+php artisan key:generate
+```
+
+Configure your database and run migrations:
+
+```bash
+php artisan migrate
+```
+
+Build assets:
+
+```bash
+npm run build
+```
+
+Start development server:
+
+```bash
+php artisan serve
+```
+
+Application will be available at:
+
+```text
+http://localhost:8000
+```
+
+---
+
+## 📁 Project Structure
+
+```text
+app/
+├── Http/
+├── Models/
+├── Services/
+├── Imports/
+├── Exports/
+
+resources/
+├── views/
+
+routes/
+├── web.php
+├── api.php
+```
+
+---
+
+## 🔮 Future Improvements
+
+* Custom Domains
+* Team Workspaces
+* Advanced Geo Analytics
+* Link Scheduling
+* Webhooks
+* Public API SDK
+
+---
+
+## 👨‍💻 Author
+
+Neeraj Sharma
+
+Laravel Developer
+
+GitHub: https://github.com/neerajksha
+
+LinkedIn: linkedin.com/in/neerajsharma-dev
+
+---
+
+## 📄 License
+
+This project is open-source and available under the MIT License.

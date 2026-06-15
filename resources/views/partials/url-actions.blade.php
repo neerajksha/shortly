@@ -51,6 +51,17 @@
         </li>
 
         <li>
+            <a
+                href="{{ route('urls.edit', $url) }}"
+                class="dropdown-item"
+            >
+                📊 Edit
+            </a>
+        </li>
+
+        
+
+        <li>
             <hr class="dropdown-divider">
         </li>
 
