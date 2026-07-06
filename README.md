@@ -1,6 +1,6 @@
 # Shortly 🚀
 
-A modern URL shortening platform built with Laravel 12 that allows users to create, manage, secure, and analyze shortened URLs through a powerful dashboard and REST API.
+A modern URL shortening platform built with Laravel 13 that allows users to create, manage, secure, and analyze shortened URLs through a powerful dashboard and REST API.
 
 ---
 
