@@ -35,11 +35,11 @@ class UrlController extends Controller
                             'like',
                             "%{$search}%"
                         )
-                        ->orWhere(
-                            'original_url',
-                            'like',
-                            "%{$search}%"
-                        );
+                            ->orWhere(
+                                'original_url',
+                                'like',
+                                "%{$search}%"
+                            );
                     });
                 }
             })
@@ -107,8 +107,8 @@ class UrlController extends Controller
         }
 
         $password = $request->filled('password')
-        ? Hash::make($request->password)
-        : null;
+            ? Hash::make($request->password)
+            : null;
 
         Url::create([
             'user_id' => auth()->id(),
@@ -179,7 +179,7 @@ class UrlController extends Controller
         if ($url->user_id !== auth()->id()) {
             abort(403);
         }
-        
+
         $url->delete();
 
         return back()->with(
@@ -257,7 +257,7 @@ class UrlController extends Controller
         } elseif ($request->filled('password')) {
             $password = Hash::make($request->password);
             $password_version = $url->password_version++;
-        }else{
+        } else {
             $password = $url->password;
             $password_version = $url->password_version;
         }
@@ -280,8 +280,7 @@ class UrlController extends Controller
 
     public function showPasswordForm(
         Url $url
-    )
-    {
+    ) {
         return view(
             'urls.password',
             compact('url')
@@ -291,8 +290,7 @@ class UrlController extends Controller
     public function verifyPassword(
         Request $request,
         Url $url
-    )
-    {
+    ) {
         if (
             ! Hash::check(
                 $request->password,
@@ -303,7 +301,7 @@ class UrlController extends Controller
             return back()->withErrors([
 
                 'password' =>
-                    'Incorrect password.'
+                'Incorrect password.'
 
             ]);
         }
@@ -314,7 +312,7 @@ class UrlController extends Controller
         );
 
         return redirect(
-            '/'.$url->short_code
+            '/' . $url->short_code
         );
     }
 }
