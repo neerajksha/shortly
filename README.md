@@ -199,7 +199,7 @@ GET /api/v1/urls/{id}/clicks
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/shortly.git
+git clone https://github.com/neerajksha/shortly.git
 ```
 
 Move into project directory:
